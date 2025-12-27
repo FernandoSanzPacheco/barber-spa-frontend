@@ -42,7 +42,7 @@ const NewAppointmentPage = () => {
             await api.post('/Appointments', formData);
             
             toast.success('¡Cita agendada con éxito!');
-            navigate('/appointments'); // Redirigir a Mis Citas
+            navigate('/appointments'); // Redirigir a Citas
         } catch (error) {
             console.error(error);
             toast.error(error.response?.data?.detail || 'No se pudo agendar la cita');
@@ -93,7 +93,7 @@ const NewAppointmentPage = () => {
                             <option value="">-- Elige un servicio --</option>
                             {services.map(service => (
                                 <option key={service.id} value={service.id}>
-                                    {service.name} - ${service.price} ({service.duration} min)
+                                    {service.name} - S/.{service.price} ({service.duration} min)
                                 </option>
                             ))}
                         </select>

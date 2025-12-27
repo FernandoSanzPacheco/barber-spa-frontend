@@ -6,6 +6,7 @@ const MyAppointmentsPage = () => {
     const [appointments, setAppointments] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    // listar citas
     const fetchAppointments = async () => {
         try {
             const response = await api.get('/Appointments/my-appointments');
@@ -21,18 +22,20 @@ const MyAppointmentsPage = () => {
         fetchAppointments();
     }, []);
 
+    // cancerlar cita
     const handleCancel = async (id) => {
         if (!window.confirm("¿Estás seguro de que deseas cancelar esta cita?")) return;
 
         try {
             await api.put(`/Appointments/${id}/cancel`);
             toast.success('Cita cancelada');
-            fetchAppointments(); // Recargar la lista
+            fetchAppointments(); // Recarga la lista
         } catch (error) {
             toast.error('No se pudo cancelar la cita');
         }
     };
 
+    // Texto de carga
     if (loading) return <div className="text-center mt-10">Cargando historial...</div>;
 
     return (

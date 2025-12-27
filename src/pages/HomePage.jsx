@@ -55,7 +55,7 @@ const HomePage = () => {
                         Av. Argentina 123, Lima
                     </p>
                     <p className="text-gray-600 mt-2">
-                        WhatsApp: 987 654 321
+                        WhatsApp: 958152960
                     </p>
                 </div>
             </div>

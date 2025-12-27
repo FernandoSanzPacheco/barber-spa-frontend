@@ -28,7 +28,7 @@ const RegisterPage = () => {
         }
 
         try {
-            // Eliminamos confirmPassword antes de enviar a la API
+            // Elimina confirmPassword antes de enviar a la API
             const { confirmPassword, ...dataToSend } = formData;
             await register(dataToSend);
             toast.success('¡Cuenta creada exitosamente!');

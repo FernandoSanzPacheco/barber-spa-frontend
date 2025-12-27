@@ -10,14 +10,17 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    // al cargar la app verifica si hay token guardado
+    // Helpers de Roles (Basado en los strings del Backend)
+    const isAdmin = () => user?.role === 'Admin';
+    const isReceptionist = () => user?.role === 'Receptionist';
+    const isClient = () => user?.role === 'Client';
+
     useEffect(() => {
         const checkLogin = async () => {
             const token = localStorage.getItem('token');
             const storedUser = localStorage.getItem('user');
-
+            
             if (token && storedUser) {
-                // Podriamos validar el token con el backend aquí (opcional)
                 setUser(JSON.parse(storedUser));
                 setIsAuthenticated(true);
             }
@@ -29,14 +32,15 @@ export const AuthProvider = ({ children }) => {
     const login = async (email, password) => {
         try {
             const response = await api.post('/Auth/login', { email, password });
-            const { token, ...userData } = response.data; // Separamos el token de los datos del usuario
-
+            // El backend devuelve: { token, id, email, fullName, role }
+            const { token, ...userData } = response.data;
+            
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(userData));
             
             setUser(userData);
             setIsAuthenticated(true);
-            return true; // Login exitoso
+            return true; 
         } catch (error) {
             console.error(error);
             throw error.response?.data?.detail || "Error al iniciar sesión";
@@ -47,10 +51,10 @@ export const AuthProvider = ({ children }) => {
         try {
             const response = await api.post('/Auth/register', userData);
             const { token, ...newUserData } = response.data;
-
+            
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(newUserData));
-
+            
             setUser(newUserData);
             setIsAuthenticated(true);
         } catch (error) {
@@ -67,7 +71,17 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, register, logout, isAuthenticated, loading }}>
+        <AuthContext.Provider value={{ 
+            user, 
+            login, 
+            register, 
+            logout, 
+            isAuthenticated, 
+            loading,
+            isAdmin,   
+            isReceptionist,
+            isClient    
+        }}>
             {children}
         </AuthContext.Provider>
     );

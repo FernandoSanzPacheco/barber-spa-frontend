@@ -38,7 +38,7 @@ const ServicesPage = () => {
                         <div className="flex justify-between items-start mb-4">
                             <h3 className="text-xl font-bold text-slate-900">{service.name}</h3>
                             <span className="bg-slate-100 text-slate-800 px-3 py-1 text-sm font-semibold rounded">
-                                ${service.price}
+                                S/.{service.price}
                             </span>
                         </div>
                         
